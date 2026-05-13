@@ -1,6 +1,6 @@
 /**
  * Fighter class represents a combatant in the arena.
- * It contains basic attributes such as name, HP, and attack power.
+ * It contains attributes such as name, HP, and attack power.
  */
 public class Fighter {
 
@@ -10,9 +10,10 @@ public class Fighter {
 
     /**
      * Constructor to initialize a fighter.
-     * @param name Name of the fighter
-     * @param hp Hit points
-     * @param attackPower Base attack power
+     *
+     * @param name fighter name
+     * @param hp fighter hit points
+     * @param attackPower fighter attack power
      */
     public Fighter(String name, int hp, int attackPower) {
         this.name = name;
@@ -20,27 +21,46 @@ public class Fighter {
         this.attackPower = attackPower;
     }
 
-    // Getters
+    /**
+     * Gets fighter name.
+     *
+     * @return fighter name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Gets fighter HP.
+     *
+     * @return fighter HP
+     */
     public int getHp() {
         return hp;
     }
 
+    /**
+     * Gets fighter attack power.
+     *
+     * @return fighter attack power
+     */
     public int getAttackPower() {
         return attackPower;
     }
 
-    // Setter
+    /**
+     * Sets fighter HP.
+     *
+     * @param hp updated HP value
+     */
     public void setHp(int hp) {
         this.hp = hp;
     }
 
     /**
-     * Checks if fighter is still alive.
-     * @return true if HP > 0
+     * Checks if fighter is alive.
+     *
+     * @return true if HP is greater than 0
      */
     public boolean isAlive() {
         return hp > 0;

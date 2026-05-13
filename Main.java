@@ -4,7 +4,7 @@ import java.util.Random;
 
 /**
  * Main driver class for Dice Battle Arena.
- * 
+ *
  * Uses Java API classes:
  * - ArrayList
  * - Random
@@ -16,6 +16,7 @@ public class Main {
 
     /**
      * Main method to run the arena simulation.
+     *
      * @param args command line arguments
      */
     public static void main(String[] args) {
@@ -34,27 +35,49 @@ public class Main {
 
         // Print starting stats
         for (Fighter f : fighters) {
-            System.out.println(f.getName() + " | HP: " + f.getHp() + " | ATK: " + f.getAttackPower());
+            System.out.println(
+                    f.getName()
+                            + " | HP: "
+                            + f.getHp()
+                            + " | ATK: "
+                            + f.getAttackPower()
+            );
         }
 
         int round = 1;
 
         while (fighters.size() > 1) {
+
             System.out.println("\n--- ROUND " + round + " ---");
 
             // Shuffle turn order
             Collections.shuffle(fighters);
 
             for (int i = 0; i < fighters.size(); i++) {
+
                 Fighter attacker = fighters.get(i);
 
-                if (!attacker.isAlive()) continue;
+                // Skip dead fighters
+                if (!attacker.isAlive()) {
+                    continue;
+                }
+
+                // Create list of valid targets
+                ArrayList<Fighter> targets = new ArrayList<>();
+
+                for (Fighter f : fighters) {
+                    if (f != attacker && f.isAlive()) {
+                        targets.add(f);
+                    }
+                }
+
+                // Stop if no targets remain
+                if (targets.isEmpty()) {
+                    break;
+                }
 
                 // Pick random target
-                Fighter target;
-                do {
-                    target = fighters.get(rand.nextInt(fighters.size()));
-                } while (target == attacker || !target.isAlive());
+                Fighter target = targets.get(rand.nextInt(targets.size()));
 
                 int damage;
 
@@ -66,24 +89,43 @@ public class Main {
                 } else if (choice == 1) {
                     damage = BattleUtils.rollAttack(attacker.getAttackPower());
                 } else {
-                    damage = BattleUtils.rollAttack("sword", attacker.getAttackPower());
+                    damage = BattleUtils.rollAttack(
+                            "sword",
+                            attacker.getAttackPower()
+                    );
                 }
 
-                damage = Math.max(1, damage); // ensure minimum damage
+                // Ensure minimum damage
+                damage = Math.max(1, damage);
 
                 // Apply damage
-                target.setHp(target.getHp() - damage);
+                target.setHp(
+                        Math.max(0, target.getHp() - damage)
+                );
 
-                // Print logs
-                System.out.println(BattleUtils.formatLog(
-                        attacker.getName(),
-                        target.getName(),
-                        damage
-                ));
+                // Demonstrate overloaded formatLog methods
+                System.out.println(
+                        BattleUtils.formatLog(
+                                attacker.getName(),
+                                target.getName(),
+                                damage
+                        )
+                );
+
+                System.out.println(
+                        BattleUtils.formatLog(
+                                attacker.getName(),
+                                damage
+                        )
+                );
 
                 // Check elimination
-                if (target.getHp() <= 0) {
-                    System.out.println(BattleUtils.formatLog(target.getName() + " has been eliminated!"));
+                if (!target.isAlive()) {
+                    System.out.println(
+                            BattleUtils.formatLog(
+                                    target.getName() + " has been eliminated!"
+                            )
+                    );
                 }
             }
 
@@ -95,8 +137,11 @@ public class Main {
 
         // Winner
         System.out.println("\n=== BATTLE ENDED ===");
+
         if (fighters.size() == 1) {
-            System.out.println("Winner: " + fighters.get(0).getName());
+            System.out.println(
+                    "Winner: " + fighters.get(0).getName()
+            );
         } else {
             System.out.println("No winner.");
         }

@@ -9,7 +9,8 @@ public class BattleUtils {
     private static Random rand = new Random();
 
     /**
-     * Rolls a basic attack (1d6).
+     * Rolls a basic attack using 1d6.
+     *
      * @return damage value
      */
     public static int rollAttack() {
@@ -17,7 +18,8 @@ public class BattleUtils {
     }
 
     /**
-     * Rolls attack with a bonus.
+     * Rolls an attack with bonus damage.
+     *
      * @param bonus additional damage
      * @return total damage
      */
@@ -26,23 +28,28 @@ public class BattleUtils {
     }
 
     /**
-     * Rolls attack based on weapon type with bonus.
+     * Rolls an attack based on weapon type with bonus.
+     *
      * @param weapon type of weapon
      * @param bonus additional damage
      * @return total damage
      */
     public static int rollAttack(String weapon, int bonus) {
+
         int base;
 
         switch (weapon.toLowerCase()) {
+
             case "sword":
-                base = rand.nextInt(8) + 1; // 1d8
+                base = rand.nextInt(8) + 1;
                 break;
+
             case "axe":
-                base = rand.nextInt(10) + 1; // 1d10
+                base = rand.nextInt(10) + 1;
                 break;
+
             default:
-                base = rand.nextInt(6) + 1; // default 1d6
+                base = rand.nextInt(6) + 1;
         }
 
         return base + bonus;
@@ -50,31 +57,43 @@ public class BattleUtils {
 
     /**
      * Formats a simple event log.
-     * @param event message
-     * @return formatted string
+     *
+     * @param event event message
+     * @return formatted log message
      */
     public static String formatLog(String event) {
         return "[LOG] " + event;
     }
 
     /**
-     * Formats attacker damage log.
-     * @param attacker name
+     * Formats an attacker damage log.
+     *
+     * @param attacker attacker name
      * @param damage damage dealt
-     * @return formatted string
+     * @return formatted log message
      */
     public static String formatLog(String attacker, int damage) {
         return attacker + " deals " + damage + " damage!";
     }
 
     /**
-     * Formats full combat log.
+     * Formats a full combat log.
+     *
      * @param attacker attacker name
      * @param target target name
      * @param damage damage dealt
-     * @return formatted string
+     * @return formatted combat log
      */
-    public static String formatLog(String attacker, String target, int damage) {
-        return attacker + " hits " + target + " for " + damage + " damage!";
+    public static String formatLog(
+            String attacker,
+            String target,
+            int damage
+    ) {
+        return attacker
+                + " hits "
+                + target
+                + " for "
+                + damage
+                + " damage!";
     }
 }
